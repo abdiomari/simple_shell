@@ -7,7 +7,7 @@
  *
  * Return: 0 on success, 1 on error, or error code
  */
-int shell_loop(info_t* info, char** av)
+int shell_loop(info_t *info, char **av)
 {
 	ssize_t input_len = 0;
 	int builtin_ret = 0;
@@ -55,7 +55,7 @@ int shell_loop(info_t* info, char** av)
  *          1 if builtin found but not successful,
  *          -2 if builtin signals exit()
  */
-int find_builtin_command(info_t* info)
+int find_builtin_command(info_t *info)
 {
 	int i, builtin_ret = -1;
 	builtin_table builtintbl[] = {
@@ -87,7 +87,7 @@ int find_builtin_command(info_t* info)
  *
  * Return: void
  */
-void find_command(info_t* info)
+void find_command(info_t *info)
 {
 	char* path = NULL;
 	int i, arg_count;
@@ -129,7 +129,7 @@ void find_command(info_t* info)
  *
  * Return: void
  */
-void fork_command(info_t* info)
+void fork_command(info_t *info)
 {
 	pid_t child_pid;
 

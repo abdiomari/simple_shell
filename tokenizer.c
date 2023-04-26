@@ -17,7 +17,7 @@ return (NULL);
 if (!delimiter)
 delimiter = " ";
 
-// count number of words in the string
+
 for (i = 0; str[i] != '\0'; i++)
 if (!is_delimiter(str[i], delimiter) &&
 (is_delimiter(str[i + 1], delimiter) || !str[i + 1]))
@@ -26,45 +26,30 @@ num_words++;
 if (num_words == 0)
 return (NULL);
 
-// allocate memory for array of words
 words = malloc((1 + num_words) *sizeof(char *));
 if (!words)
 return (NULL);
 
-// split the string into words
 for (i = 0, j = 0; j < num_words; j++)
 {
-// skip over delimiters
 while (is_delimiter(str[i], delimiter))
 i++;
-
 k = 0;
-// count length of word
 while (!is_delimiter(str[i + k], delimiter) && str[i + k])
 k++;
-
-// allocate memory for word
 words[j] = malloc((k + 1) * sizeof(char));
 if (!words[j])
 {
-// free previously allocated memory for words
 for (k = 0; k < j; k++)
 free(words[k]);
 free(words);
 return (NULL);
 }
-
-// copy word from string to array of words
 for (m = 0; m < k; m++)
 words[j][m] = str[i++];
-
-// null-terminate word
 words[j][m] = 0;
 }
-
-// null-terminate array of words
 words[j] = NULL;
-
 return (words);
 }
 
@@ -86,7 +71,8 @@ return (NULL);
 
 for (i = 0; input_string[i] != '\0'; i++)
 if ((input_string[i] != delimiter && input_string[i + 1] == delimiter) ||
-(input_string[i] != delimiter && !input_string[i + 1]) || input_string[i + 1] == delimiter)
+(input_string[i] != delimiter && !input_string[i + 1]) ||
+input_string[i + 1] == delimiter)
 num_words++;
 
 if (num_words == 0)
@@ -101,7 +87,8 @@ for (i = 0, j = 0; j < num_words; j++)
 while (input_string[i] == delimiter && input_string[i] != delimiter)
 i++;
 k = 0;
-while (input_string[i + k] != delimiter && input_string[i + k] && input_string[i + k] != delimiter)
+while (input_string[i + k] != delimiter && input_string[i + k] &&
+	       	input_string[i + k] != delimiter)
 k++;
 
 words_array[j] = malloc((k + 1) * sizeof(char));

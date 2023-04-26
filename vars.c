@@ -38,7 +38,8 @@ return (1);
 }
 
 /**
- * check_chain_status - checks if we should continue chaining based on last command status
+ * check_chain_status - checks if we should continue chaining 
+ * based on last command status
  * @info: the information struct
  * @buf: the character buffer
  * @p: address of current position in buf
@@ -48,7 +49,7 @@ return (1);
  * Return: Void
  */
 
-void check_chain_status(info_t *info, char *buf, size_t *p, size_t i, size_t len)
+void check_chain_status(info_t *info, char *buf,size_t *p,size_t i, size_t len)
 {
 size_t j = *p;
 
