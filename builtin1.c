@@ -1,111 +1,116 @@
-
 #include "shell.h"
 
 /**
- * exit_shell - exits the shell
- * @shell_info: Pointer to a structure containing potential arguments. Used to
- *              maintain constant function prototype.
- *
- * Return: exits with a given exit status
- *         (0) if shell_info->argv[0] != "exit"
+ * _myhistory - displays the history list, one command by line, preceded
+ *              with line numbers, starting at 0.
+ * @info: Structure containing potential arguments. Used to maintain
+ *        constant function prototype.
+ *  Return: Always 0
  */
-
-int exit_shell(shell_info_t *shell_info)
+int _myhistory(info_t *info)
 {
-int exit_code;
-
-if (shell_info->argv[1])
-{
-exit_code = str_to_int(shell_info->argv[1]);
-if (exit_code == -1)
-{
-shell_info->status = 2;
-print_error(shell_info, "Illegal number: ");
-print_string(shell_info->argv[1]);
-print_string("\n");
-return 1;
-}
-shell_info->err_num = exit_code;
-return -2;
-}
-shell_info->err_num = -1;
-return -2;
+	print_list(info->history);
+	return (0);
 }
 
 /**
- * change_directory - changes the current directory of the process
- * @shell_info: Pointer to a structure containing potential arguments. Used to
- *              maintain constant function prototype.
+ * unset_alias - sets alias to string
+ * @info: parameter struct
+ * @str: the string alias
  *
- * Return: Always 0
+ * Return: Always 0 on success, 1 on error
  */
-int change_directory(shell_info_t *shell_info)
+int unset_alias(info_t *info, char *str)
 {
-char *dir, *s, buffer[1024];
-int chdir_ret;
+	char *p, c;
+	int ret;
 
-s = getcwd(buffer, 1024);
-if (!s)
-print_string("TODO: >>getcwd failure emsg here<<\n");
-
-if (!shell_info->argv[1])
-{
-dir = get_env(shell_info, "HOME=");
-
-if (!dir)
-chdir_ret = /* TODO: what should this be? */
-chdir((dir = get_env(shell_info, "PWD=")) ? dir : "/");
-
-else
-chdir_ret = chdir(dir);
-}
-    
-else if (strcmp(shell_info->argv[1], "-") == 0)
-{
-if (!get_env(shell_info, "OLDPWD="))
-{
-print_string(s);
-print_char('\n');
-return 1;
-}
-print_string(get_env(shell_info, "OLDPWD="));
-print_char('\n');
-chdir_ret = /* TODO: what should this be? */
-chdir((dir = get_env(shell_info, "OLDPWD=")) ? dir : "/");
-}
-else
-chdir_ret = chdir(shell_info->argv[1]);
-
-if (chdir_ret == -1)
-{
-print_error(shell_info, "can't cd to ");
-print_string(shell_info->argv[1]);
-print_char('\n');
-}
-else
-{
-set_env(shell_info, "OLDPWD", get_env(shell_info, "PWD="));
-set_env(shell_info, "PWD", getcwd(buffer, 1024));
-}
-return 0;
+	p = _strchr(str, '=');
+	if (!p)
+		return (1);
+	c = *p;
+	*p = 0;
+	ret = delete_node_at_index(&(info->alias),
+		get_node_index(info->alias, node_starts_with(info->alias, str, -1)));
+	*p = c;
+	return (ret);
 }
 
 /**
- * help_shell - displays information about built-in shell commands
- * @shell_info: Pointer to a structure containing potential arguments. Used to
- *              maintain constant function prototype.
+ * set_alias - sets alias to string
+ * @info: parameter struct
+ * @str: the string alias
  *
- * Return: Always 0
+ * Return: Always 0 on success, 1 on error
  */
-
-int help_shell(shell_info_t *shell_info)
+int set_alias(info_t *info, char *str)
 {
-char **arg_array;
+	char *p;
 
-arg_array = shell_info->argv;
-print_string("help call works. Function not yet implemented \n");
-if (0)
-print_string(*arg_array); /* temp att_unused workaround */
-return 0;
+	p = _strchr(str, '=');
+	if (!p)
+		return (1);
+	if (!*++p)
+		return (unset_alias(info, str));
+
+	unset_alias(info, str);
+	return (add_node_end(&(info->alias), str, 0) == NULL);
+}
+
+/**
+ * print_alias - prints an alias string
+ * @node: the alias node
+ *
+ * Return: Always 0 on success, 1 on error
+ */
+int print_alias(list_t *node)
+{
+	char *p = NULL, *a = NULL;
+
+	if (node)
+	{
+		p = _strchr(node->str, '=');
+		for (a = node->str; a <= p; a++)
+			_putchar(*a);
+		_putchar('\'');
+		_puts(p + 1);
+		_puts("'\n");
+		return (0);
+	}
+	return (1);
+}
+
+/**
+ * _myalias - mimics the alias builtin (man alias)
+ * @info: Structure containing potential arguments. Used to maintain
+ *          constant function prototype.
+ *  Return: Always 0
+ */
+int _myalias(info_t *info)
+{
+	int i = 0;
+	char *p = NULL;
+	list_t *node = NULL;
+
+	if (info->argc == 1)
+	{
+		node = info->alias;
+		while (node)
+		{
+			print_alias(node);
+			node = node->next;
+		}
+		return (0);
+	}
+	for (i = 1; info->argv[i]; i++)
+	{
+		p = _strchr(info->argv[i], '=');
+		if (p)
+			set_alias(info, info->argv[i]);
+		else
+			print_alias(node_starts_with(info->alias, info->argv[i], '='));
+	}
+
+	return (0);
 }
 

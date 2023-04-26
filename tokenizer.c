@@ -16,13 +16,10 @@ if (str == NULL || str[0] == 0)
 return (NULL);
 if (!delimiter)
 delimiter = " ";
-
-
 for (i = 0; str[i] != '\0'; i++)
 if (!is_delimiter(str[i], delimiter) &&
 (is_delimiter(str[i + 1], delimiter) || !str[i + 1]))
 num_words++;
-
 if (num_words == 0)
 return (NULL);
 
@@ -81,16 +78,14 @@ return (NULL);
 words_array = malloc((1 + num_words) *sizeof(char *));
 if (!words_array)
 return (NULL);
-
 for (i = 0, j = 0; j < num_words; j++)
 {
 while (input_string[i] == delimiter && input_string[i] != delimiter)
 i++;
 k = 0;
 while (input_string[i + k] != delimiter && input_string[i + k] &&
-	       	input_string[i + k] != delimiter)
+input_string[i + k] != delimiter)
 k++;
-
 words_array[j] = malloc((k + 1) * sizeof(char));
 if (!words_array[j])
 {
@@ -99,15 +94,11 @@ free(words_array[k]);
 free(words_array);
 return (NULL);
 }
-
 for (m = 0; m < k; m++)
 words_array[j][m] = input_string[i++];
-
 words_array[j][m] = '\0';
 }
-
 words_array[j] = NULL;
-
 return (words_array);
 }
 

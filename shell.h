@@ -53,7 +53,7 @@ typedef struct liststr
 
 
 /**
-*@arg: A string generated from the "getline" function that contains the
+* @arg: A string generated from the "getline" function that contains the
 arguments entered by the user.
 *@argv": An array of strings generated from the "arg" string,
 where each element represents an individual argument.

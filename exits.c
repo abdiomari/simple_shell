@@ -24,7 +24,7 @@ for (; i < n; i++)
 dest[i] = '\0';
 }
 
-return dest_start;
+return (dest_start);
 }
 
 /**
@@ -50,7 +50,7 @@ dest[dest_len + i] = src[i];
 
 dest[dest_len + i] = '\0';
 
-return dest_start;
+return (dest_start);
 }
 
 /**
@@ -68,10 +68,10 @@ for (; *s != '\0'; s++)
 {
 if (*s == c)
 {
-return (char *)s;
+return (char *s);
 }
 }
 
-return NULL;
+return (NULL);
 }
 
