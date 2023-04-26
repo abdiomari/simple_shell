@@ -3,17 +3,17 @@
 /**
  * get_hist_file - returns a string containing the path
  * to the history file
- * @info: of type info_t* pointer to a struct containing 
+ * @info: of type info_t* pointer to a struct containing
  * about the shells current state
  *
  *
  * Return: returns buf which contains the full path
- * to the history file 
+ * to the history file
  */
 
-char* get_hist_file(info_t* info)
+char *get_hist_file(info_t *info)
 {
-	char* buf, * dir;
+	char* buf, *dir;
 
 	dir = _getenv(info, "HOME=");
 	if (!dir)
@@ -29,18 +29,18 @@ char* get_hist_file(info_t* info)
 }
 
 /**
- * write_hist_file - writes the contents of a linked list of commands 
+ * write_hist_file - writes the contents of a linked list of commands
  * to a history file
- * @info: of type  info_t* which is a pointer to a struct containing 
+ * @info: of type  info_t* which is a pointer to a struct containing
  * information about the shells current state
  *
  * Return: '1' on success, otherwise '-1'
  */
-int write_hist_file(info_t* info)
+int write_hist_file(info_t *info)
 {
 	ssize_t fd;
-	char* filename = get_history_file(info);
-	list_t* node = NULL;
+	char *filename = get_history_file(info);
+	list_t *node = NULL;
 
 	if (!filename)
 		return (-1);
@@ -62,17 +62,17 @@ int write_hist_file(info_t* info)
 /**
  * read_hist_file - reads history from file
  * and builds a linked list of commands in memory
- * @info: pointer to a struct containing info 
+ * @info: pointer to a struct containing info
  *about the shells current state
  *
  * Return: final value of histcount
  */
-int read_hist_file(info_t* info)
+int read_hist_file(info_t *info)
 {
 	int i, last = 0, linecount = 0;
 	ssize_t fd, rdlen, fsize = 0;
 	struct stat st;
-	char* buf = NULL, * filename = get_history_file(info);
+	char* buf = NULL, *filename = get_history_file(info);
 
 	if (!filename)
 		return (0);
@@ -111,17 +111,17 @@ int read_hist_file(info_t* info)
 }
 
 /**
- * build_hist_file - adds an entry to a linked list 
- * that represents the comand history 
+ * build_hist_file - adds an entry to a linked list
+ * that represents the comand history
  * @info: of type info_t* pointer to a structure
  * @buf: of type char* buffer to update history
  * @linecount: of type int the history linecount
  *
  * Return: 0
  */
-int build_hist_file(info_t* info, char* buf, int linecount)
+int build_hist_file(info_t *info, char *buf, int linecount)
 {
-	list_t* node = NULL;
+	list_t *node = NULL;
 
 	if (info->history)
 		node = info->history;
@@ -133,17 +133,17 @@ int build_hist_file(info_t* info, char* buf, int linecount)
 }
 
 /**
- * renumber_hist_file - updates the line numbers the 
+ * renumber_hist_file - updates the line numbers the
  * of each node in the history linked list after any changes
  * have been made
- * @info: of type info_t* a structure containing 
+ * @info: of type info_t* a structure containing
  * potential arguments
  *
  * Return: the value of info-> histcount
  */
-int renumber_hist_file(info_t* info)
+int renumber_hist_file(info_t *info)
 {
-	list_t* node = info->history;
+	list_t *node = info->history;
 	int i = 0;
 
 	while (node)
