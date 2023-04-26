@@ -13,7 +13,7 @@
 
 char *get_hist_file(info_t *info)
 {
-	char* buf, *dir;
+	char *buf, *dir;
 
 	dir = _getenv(info, "HOME=");
 	if (!dir)
@@ -72,7 +72,7 @@ int read_hist_file(info_t *info)
 	int i, last = 0, linecount = 0;
 	ssize_t fd, rdlen, fsize = 0;
 	struct stat st;
-	char* buf = NULL, *filename = get_history_file(info);
+	char *buf = NULL, *filename = get_history_file(info);
 
 	if (!filename)
 		return (0);

@@ -210,7 +210,7 @@ ssize_t get_node_index(list_t *, list_t *);
 /* vars.c */
 int is_delimiter(info_t *info, char *buf, size_t *p);
 void check_chain_status(info_t *info, char *buf, size_t *p, size_t i,
-	       	size_t len);
+i size_t len);
 int replace_alias(info_t *info);
 int replace_vars(info_t *info);
 int replace_string(char **old, char *new);
@@ -222,7 +222,7 @@ char **split_string(char *input_string, char delimiter);
 
 /* realloc.c */
 char *_memset(char *, char, unsigned int);
-void free_str_arr(char** str_arr);
+void free_str_arr(char **str_arr);
 void *_realloc(void *, unsigned int, unsigned int);
 
 /* memory.c */

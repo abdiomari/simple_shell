@@ -89,7 +89,7 @@ int find_builtin_command(info_t *info)
  */
 void find_command(info_t *info)
 {
-	char* path = NULL;
+	char *path = NULL;
 	int i, arg_count;
 
 	info->path = info->argv[0];
